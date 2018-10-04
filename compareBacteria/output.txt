@@ -4,4 +4,4 @@
 001 002 -> 0.0010024742
 001 003 -> 0.0120014544
 002 003 -> 0.0016697770
-time elapsed: 46 seconds
+time elapsed: 24 seconds
