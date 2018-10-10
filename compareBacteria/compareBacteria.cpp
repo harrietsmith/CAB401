@@ -100,15 +100,21 @@ public:
 
 #pragma omp parallel for
 		for (long i = 0; i < M; i++) {
-			double p1 = (double)second[i / AA_NUMBER] / (total + complement);
-			double p2 = (double)one_l[i % AA_NUMBER] / total_l;
-			double p3 = (double)second[i % M1] / (total + complement);
-			double p4 = (double)one_l[i / M1] / total_l;
-			stochastic[i] = total * (p1 * p2 + p3 * p4) / 2;
-			//stochastic[i] = stochastic_compute(i);
+			stochastic[i] = stochastic_compute(i);
 		}
 	}
 
+//#pragma omp parallel for
+//	for (long i = 0; i < M; i++) {
+//		double p1 = (double)second[i / AA_NUMBER] / (total + complement);
+//		double p2 = (double)one_l[i % AA_NUMBER] / total_l;
+//		double p3 = (double)second[i % M1] / (total + complement);
+//		double p4 = (double)one_l[i / M1] / total_l;
+//		stochastic[i] = total * (p1 * p2 + p3 * p4) / 2;
+//	}
+//}
+
+	
 	~Bacteria()
 	{
 		delete vector;
