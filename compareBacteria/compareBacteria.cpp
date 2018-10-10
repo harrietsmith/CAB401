@@ -3,6 +3,7 @@
 #include <time.h>
 #include <math.h>
 #include <assert.h>
+#include <vector>
 
 int number_bacteria;
 char** bacteria_name;
@@ -178,18 +179,19 @@ double CompareBacteria(Bacteria* b1, Bacteria* b2)
 
 void CompareAllBacteria()
 {
+	std::vector<Bacteria*> bacteriaVector(number_bacteria);
+
+	for (int i = 0; i < number_bacteria - 1; i++) {
+		 bacteriaVector[i] = new Bacteria(bacteria_name[i]);
+	}
+	
 	for (int i = 0; i < number_bacteria - 1; i++)
 	{
-		Bacteria* b1 = new Bacteria(bacteria_name[i]);
-
 		for (int j = i + 1; j < number_bacteria; j++)
 		{
-			Bacteria* b2 = new Bacteria(bacteria_name[j]);
-			double correlation = CompareBacteria(b1, b2);
+			double correlation = CompareBacteria(bacteriaVector[i], bacteriaVector[j]);
 			printf("%03d %03d -> %.10lf\n", i, j, correlation);
-			delete b2;
 		}
-		delete b1;
 	}
 }
 
