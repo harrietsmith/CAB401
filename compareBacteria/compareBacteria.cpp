@@ -147,10 +147,10 @@ double CompareBacteria(Bacteria* b1, Bacteria* b2)
 	double correlation = 0;
 	double vector_len1 = 0;
 	double vector_len2 = 0;
-#pragma omp parallel for
+#pragma omp parallel for schedule(static)
 	for (long i = 0; i < M; i++)
 	{
-		//double stochastic1 = b1->stochastic_compute(i);
+
 		double t1;
 		if (b1->stochastic[i] > EPSILON) {
 			t1 = (b1->vector[i] - b1->stochastic[i]) / b1->stochastic[i];
@@ -160,8 +160,6 @@ double CompareBacteria(Bacteria* b1, Bacteria* b2)
 		else
 			t1 = 0;
 
-
-		//double stochastic2 = b2->stochastic_compute(i);
 		double t2;
 		if (b2->stochastic[i] > EPSILON) {
 			t2 = (b2->vector[i] - b2->stochastic[i]) / b2->stochastic[i];
