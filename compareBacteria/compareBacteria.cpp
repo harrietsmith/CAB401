@@ -4,6 +4,7 @@
 #include <math.h>
 #include <assert.h>
 #include <vector>
+#include <omp.h>
 
 int number_bacteria;
 char** bacteria_name;
@@ -191,6 +192,7 @@ void main(int argc, char * argv[])
 {
 	time_t t1 = time(NULL);
 
+	omp_set_num_threads(3);
 	Init();
 	ReadInputFile(argv[1]);
 	CompareAllBacteria();
