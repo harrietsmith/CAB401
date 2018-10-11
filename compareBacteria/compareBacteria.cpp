@@ -99,7 +99,6 @@ public:
 		}
 		fclose(bacteria_file);
 
-#pragma omp parallel for
 		for (long i = 0; i < M; i++) {
 			double p1 = (double)second[i / AA_NUMBER] / (total + complement);
 			double p2 = (double)one_l[i % AA_NUMBER] / total_l;
@@ -181,12 +180,12 @@ void CompareAllBacteria()
 {
 	std::vector<Bacteria*> bacteriaVector(number_bacteria);
 
-#pragma omp parallel for schedule(dynamic, 1)
+#pragma omp parallel for
 	for (int i = 0; i < number_bacteria; i++) {
 		 bacteriaVector[i] = new Bacteria(bacteria_name[i]);
 	}
 	
-#pragma omp parallel for schedule(guided)
+#pragma omp parallel for schedule(dynamic)
 	for (int i = 0; i < number_bacteria - 1; i++)
 	{
 		for (int j = i + 1; j < number_bacteria; j++)
