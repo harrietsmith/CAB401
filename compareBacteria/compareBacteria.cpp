@@ -181,10 +181,12 @@ void CompareAllBacteria()
 {
 	std::vector<Bacteria*> bacteriaVector(number_bacteria);
 
-	for (int i = 0; i < number_bacteria - 1; i++) {
+#pragma omp parallel for schedule(dynamic, 1)
+	for (int i = 0; i < number_bacteria; i++) {
 		 bacteriaVector[i] = new Bacteria(bacteria_name[i]);
 	}
 	
+#pragma omp parallel for schedule(guided)
 	for (int i = 0; i < number_bacteria - 1; i++)
 	{
 		for (int j = i + 1; j < number_bacteria; j++)
