@@ -88,7 +88,7 @@ public:
 		{
 			if (ch == '>')
 			{
-				while (fgetc(bacteria_file) != '\n'); // skip rest of line
+				while (fgetc(bacteria_file) != '\n'); 
 
 				char buffer[LEN - 1];
 				fread(buffer, sizeof(char), LEN - 1, bacteria_file);
@@ -99,13 +99,13 @@ public:
 		}
 		fclose(bacteria_file);
 
+		//double stochastic_compute(long i)
 		for (long i = 0; i < M; i++) {
 			double p1 = (double)second[i / AA_NUMBER] / (total + complement);
 			double p2 = (double)one_l[i % AA_NUMBER] / total_l;
 			double p3 = (double)second[i % M1] / (total + complement);
 			double p4 = (double)one_l[i / M1] / total_l;
 			stochastic[i] = total * (p1 * p2 + p3 * p4) / 2;
-			//stochastic[i] = stochastic_compute(i);
 		}
 	}
 
@@ -114,17 +114,8 @@ public:
 		delete vector;
 		delete second;
 		delete stochastic;
-		//delete one_l;
 	}
 	
-	double stochastic_compute(long i)
-	{
-		double p1 = (double)second[i / AA_NUMBER] / (total + complement);
-		double p2 = (double)one_l[i % AA_NUMBER] / total_l;
-		double p3 = (double)second[i % M1] / (total + complement);
-		double p4 = (double)one_l[i / M1] / total_l;
-		return total * (p1 * p2 + p3 * p4) / 2;
-	}
 };
 
 void ReadInputFile(char* input_name)
@@ -147,7 +138,7 @@ double CompareBacteria(Bacteria* b1, Bacteria* b2)
 	double correlation = 0;
 	double vector_len1 = 0;
 	double vector_len2 = 0;
-#pragma omp parallel for schedule(static)
+#pragma omp parallel for
 	for (long i = 0; i < M; i++)
 	{
 
