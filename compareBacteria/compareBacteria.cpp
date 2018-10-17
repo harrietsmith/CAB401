@@ -115,15 +115,6 @@ public:
 		delete second;
 		delete stochastic;
 	}
-	
-	double stochastic_compute(long i)
-	{
-		double p1 = (double)second[i / AA_NUMBER] / (total + complement);
-		double p2 = (double)one_l[i % AA_NUMBER] / total_l;
-		double p3 = (double)second[i % M1] / (total + complement);
-		double p4 = (double)one_l[i / M1] / total_l;
-		return total * (p1 * p2 + p3 * p4) / 2;
-	}
 };
 
 void ReadInputFile(char* input_name)
@@ -179,18 +170,31 @@ void CompareAllBacteria()
 {
 	std::vector<Bacteria*> bacteriaVector(number_bacteria);
 
+#pragma omp parallel for schedule(static)
 	for (int i = 0; i < number_bacteria - 1; i++) {
 		 bacteriaVector[i] = new Bacteria(bacteria_name[i]);
 	}
 	
+	double correlationVector[10][10]; // number_bacteria factorial?
+	
+#pragma omp parallel for schedule(guided)
 	for (int i = 0; i < number_bacteria - 1; i++)
 	{
 		for (int j = i + 1; j < number_bacteria; j++)
 		{
-			double correlation = CompareBacteria(bacteriaVector[i], bacteriaVector[j]);
-			printf("%03d %03d -> %.10lf\n", i, j, correlation);
+			correlationVector[i][j] = CompareBacteria(bacteriaVector[i], bacteriaVector[j]);
 		}
 	}
+
+	for (int i = 0; i < number_bacteria - 1; i++)
+	{
+		for (int j = i + 1; j < number_bacteria; j++)
+		{
+			printf("%03d %03d -> %.10lf\n", i, j, correlationVector[i][j]);
+		}
+	}
+
+	
 }
 
 void main(int argc, char * argv[])
