@@ -106,7 +106,6 @@ public:
 			double p3 = (double)second[i % M1] / (total + complement);
 			double p4 = (double)one_l[i / M1] / total_l;
 			stochastic[i] = total * (p1 * p2 + p3 * p4) / 2;
-			//stochastic[i] = stochastic_compute(i);
 		}
 	}
 
@@ -115,7 +114,6 @@ public:
 		delete vector;
 		delete second;
 		delete stochastic;
-		//delete one_l;
 	}
 	
 	double stochastic_compute(long i)
