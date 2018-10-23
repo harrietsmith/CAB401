@@ -169,20 +169,21 @@ double CompareBacteria(Bacteria* b1, Bacteria* b2)
 void CompareAllBacteria()
 {
 	std::vector<Bacteria*> bacteriaVector(number_bacteria);
+	std::vector<double> correlationVector(number_bacteria*number_bacteria);
 
 #pragma omp parallel for schedule(static)
 	for (int i = 0; i < number_bacteria - 1; i++) {
 		 bacteriaVector[i] = new Bacteria(bacteria_name[i]);
 	}
 	
-	double correlationVector[10][10]; // number_bacteria factorial?
+	
 	
 #pragma omp parallel for schedule(guided)
 	for (int i = 0; i < number_bacteria - 1; i++)
 	{
 		for (int j = i + 1; j < number_bacteria; j++)
 		{
-			correlationVector[i][j] = CompareBacteria(bacteriaVector[i], bacteriaVector[j]);
+			correlationVector[i*number_bacteria + j] = CompareBacteria(bacteriaVector[i], bacteriaVector[j]);
 		}
 	}
 
@@ -190,7 +191,7 @@ void CompareAllBacteria()
 	{
 		for (int j = i + 1; j < number_bacteria; j++)
 		{
-			printf("%03d %03d -> %.10lf\n", i, j, correlationVector[i][j]);
+			printf("%03d %03d -> %.10lf\n", i, j, correlationVector[i*number_bacteria + j]);
 		}
 	}
 
