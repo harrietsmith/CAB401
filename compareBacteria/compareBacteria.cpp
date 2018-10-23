@@ -168,15 +168,15 @@ double CompareBacteria(Bacteria* b1, Bacteria* b2)
 
 void CompareAllBacteria()
 {
-	std::vector<Bacteria*> bacteriaVector(number_bacteria);
 	std::vector<double> correlationVector(number_bacteria*number_bacteria);
+	std::fill(correlationVector.begin(), correlationVector.end(), 0);
+	
+	std::vector<Bacteria*> bacteriaVector(number_bacteria);
 
 #pragma omp parallel for schedule(static)
 	for (int i = 0; i < number_bacteria - 1; i++) {
 		 bacteriaVector[i] = new Bacteria(bacteria_name[i]);
 	}
-	
-	
 	
 #pragma omp parallel for schedule(guided)
 	for (int i = 0; i < number_bacteria - 1; i++)
@@ -195,7 +195,6 @@ void CompareAllBacteria()
 		}
 	}
 
-	
 }
 
 void main(int argc, char * argv[])
