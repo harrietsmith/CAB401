@@ -33,7 +33,6 @@ private:
 	long total_l;
 	long complement;
 
-
 	void InitVectors()
 	{
 		vector = new long[M];
@@ -194,7 +193,6 @@ void CompareAllBacteria()
 			printf("%03d %03d -> %.10lf\n", i, j, correlationVector[i*number_bacteria + j]);
 		}
 	}
-
 }
 
 void main(int argc, char * argv[])
