@@ -177,7 +177,7 @@ void CompareAllBacteria()
 		 bacteriaVector[i] = new Bacteria(bacteria_name[i]);
 	}
 	
-#pragma omp parallel for schedule(guided)
+#pragma omp parallel for schedule(dynamic)
 	for (int i = 0; i < number_bacteria; i++)
 	{
 		for (int j = i + 1; j < number_bacteria; j++)
